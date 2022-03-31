@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TopFilmsService {
@@ -28,13 +31,20 @@ public class TopFilmsService {
         return null;
     }
 
-    public Set<String> getDates() {
-        Set<String> dateFilms = new HashSet<>();
+    public List<String> getDates() {
+        List<String> dateFilms = new ArrayList<>();
         Iterable<Film> allFilms = filmRepo.findAll();
 
         for (Film film : allFilms) {
             dateFilms.add(film.getDate());
         }
+
+        dateFilms = dateFilms
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        Collections.reverse(dateFilms);
         return dateFilms;
     }
 }

@@ -25,7 +25,7 @@ public class ParserPage {
 
     public Document getPage(String url) {
         try {
-            int timeout = 20000;
+            int timeout = 5000;
             return Jsoup.parse(new URL(url), timeout);
         } catch (IOException e) {
             logger.error(e.getMessage());
@@ -43,7 +43,7 @@ public class ParserPage {
 
             if (count == 10) {
                 count = 0;
-                break;
+                return films;
             }
         }
         return films;

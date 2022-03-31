@@ -9,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class TopFilmsController {
@@ -17,9 +18,12 @@ public class TopFilmsController {
     @Autowired
     TopFilmsService topFilmsService;
 
+    @Autowired
+    ParserService parserService;
+
     @GetMapping
     public String getMainPage(Model model) {
-        Set<String> dates = topFilmsService.getDates();
+        List<String> dates = topFilmsService.getDates();
 
         model.addAttribute("dates", dates);
 
@@ -29,7 +33,7 @@ public class TopFilmsController {
     @GetMapping("/tops/{date}")
     public String getTopFilmsForDate(@PathVariable String date,
                                      Model model) {
-        Set<String> dates = topFilmsService.getDates();
+        List<String> dates = topFilmsService.getDates();
         Iterable<Film> topFilms = topFilmsService.getTopFilms(date);
 
         model.addAttribute("topFilms", topFilms);

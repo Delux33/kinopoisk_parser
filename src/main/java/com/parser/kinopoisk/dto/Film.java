@@ -8,17 +8,17 @@ public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int position;
+    private String position;
     private String name;
     private String rating;
-    private int releaseYear;
+    private String releaseYear;
     private String numberOfVotes;
     private String date;
 
     public Film() {
     }
 
-    public Film(int position, String name, String rating, int releaseYear, String numberOfVotes, String date) {
+    public Film(String position, String name, String rating, String releaseYear, String numberOfVotes, String date) {
         this.position = position;
         this.name = name;
         this.rating = rating;
@@ -35,11 +35,11 @@ public class Film {
         this.id = id;
     }
 
-    public int getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
@@ -59,11 +59,11 @@ public class Film {
         this.rating = rating;
     }
 
-    public int getReleaseYear() {
+    public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(String releaseYear) {
         this.releaseYear = releaseYear;
     }
 

@@ -27,7 +27,7 @@ public class ParserService {
     @Autowired
     FilmRepo filmRepo;
 
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void parsePage() {
         Document page = parserPage.getPage(URL);
 
@@ -38,7 +38,8 @@ public class ParserService {
             List<Film> films = parserPage.getFilms(topFilms);
             logger.info("----------Page successfully parsed----------");
             filmRepo.saveAll(films);
+        } else {
+            logger.info("----------Page unsuccessfully parsed----------");
         }
-        logger.info("----------Page unsuccessfully parsed----------");
     }
 }

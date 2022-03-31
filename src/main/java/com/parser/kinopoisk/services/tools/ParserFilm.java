@@ -20,13 +20,13 @@ public class ParserFilm {
     private final Pattern searchReleaseYear = Pattern.compile("\\d{4}");
 
     public Film getFilm(Element elementFilm) {
-        int position = Integer.parseInt(getTextFromHtml(elementFilm, POSITION_HTML));
+        String position = getTextFromHtml(elementFilm, POSITION_HTML);
         String aboutFilm = getTextFromHtml(elementFilm, ABOUT_FILM_HTML);
         String rating = getTextFromHtml(elementFilm, RATING_HTML);
         String numberOfVotes = getTextFromHtml(elementFilm, NUMBER_OF_VOTES_HTML);
 
         String name = getOriginalName(elementFilm, aboutFilm);
-        int releaseYear = getReleaseYear(aboutFilm);
+        String releaseYear = getReleaseYear(aboutFilm);
         String date = getDate();
 
         return new Film(position, name, rating, releaseYear, numberOfVotes, date);
@@ -56,9 +56,12 @@ public class ParserFilm {
         return getTextFromHtml(elementFilm, html);
     }
 
-    private int getReleaseYear(String aboutFilm) {
+    private String getReleaseYear(String aboutFilm) {
         Matcher releaseYear = searchReleaseYear.matcher(aboutFilm);
-        return Integer.parseInt(releaseYear.group());
+        if (releaseYear.find()) {
+            return releaseYear.group();
+        }
+        return null;
     }
 
     private String getDate() {
