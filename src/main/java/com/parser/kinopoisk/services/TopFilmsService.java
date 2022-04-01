@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,12 +38,15 @@ public class TopFilmsService {
             dateFilms.add(film.getDate());
         }
 
-        dateFilms = dateFilms
+        dateFilms = getDateFilmsWithoutRepeats(dateFilms);
+        Collections.reverse(dateFilms);
+        return dateFilms;
+    }
+
+    private List<String> getDateFilmsWithoutRepeats(List<String> dateFilms) {
+        return dateFilms
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
-
-        Collections.reverse(dateFilms);
-        return dateFilms;
     }
 }
