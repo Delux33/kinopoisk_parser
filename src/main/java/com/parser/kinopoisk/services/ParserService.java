@@ -27,13 +27,9 @@ public class ParserService {
     @Autowired
     FilmRepo filmRepo;
 
-    @Scheduled(cron = "0 */30 * * * *")
-    public void parsePage() {
+    @Scheduled(cron = "0 */15 * * * *")
+    private void parsePage() {
         Document page = parserPage.getPage(URL);
-
-        while (page == null) {
-            page = parserPage.getPage(URL);
-        }
 
         Element topFilmsPage = page.selectFirst(MAIN_PAGE);
         Elements topFilms = topFilmsPage != null ? topFilmsPage.select(FILM) : null;
