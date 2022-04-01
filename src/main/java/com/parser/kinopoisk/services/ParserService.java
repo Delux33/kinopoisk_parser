@@ -31,6 +31,10 @@ public class ParserService {
     public void parsePage() {
         Document page = parserPage.getPage(URL);
 
+        while (page == null) {
+            page = parserPage.getPage(URL);
+        }
+
         Element topFilmsPage = page.selectFirst(MAIN_PAGE);
         Elements topFilms = topFilmsPage != null ? topFilmsPage.select(FILM) : null;
 

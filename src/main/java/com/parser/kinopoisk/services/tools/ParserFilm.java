@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class ParserFilm {
     private final String POSITION_HTML = "span[class=styles_position__OkHEm]";
     private final String RATING_HTML = "span[class=styles_kinopoiskValuePositive__1G4F6 styles_kinopoiskValue__2oNdS]";
-    private final String NUMBER_OF_VOTES_HTML = "span[class=styles_position__OkHEm]";
+    private final String NUMBER_OF_VOTES_HTML = "span[class=styles_kinopoiskCount__1DPG7]";
     private final String ABOUT_FILM_HTML = "span[class=desktop-list-main-info_secondaryText__1ov2X]";
     private final String RUSSIAN_NAME_HTML = "span[class=styles_mainTitle__3Bgao styles_activeMovieTittle__1yPIb]";
     private final Pattern searchEnglishName = Pattern.compile(".*[^\\d],");
@@ -42,18 +42,19 @@ public class ParserFilm {
         if (englishName.find()) {
             return getEnglishName(englishName);
         } else {
-            return getRussianName(elementFilm, RUSSIAN_NAME_HTML);
+            return getRussianName(elementFilm);
         }
     }
 
-    private String getEnglishName(Matcher matcher) {
-        String name = matcher.group();
-        //example: Schindler's List,
+    private String getEnglishName(Matcher englishName) {
+        String name = englishName.group();
+        //in example: Schindler's List,
+        //out result: Schindler's List
         return name.substring(0, name.length() - 1);
     }
 
-    private String getRussianName(Element elementFilm, String html) {
-        return getTextFromHtml(elementFilm, html);
+    private String getRussianName(Element elementFilm) {
+        return getTextFromHtml(elementFilm, RUSSIAN_NAME_HTML);
     }
 
     private String getReleaseYear(String aboutFilm) {
